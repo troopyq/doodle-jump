@@ -25,7 +25,7 @@ canvas{
   background-color: rgba(0, 0, 0, .5);
 }
 .gamepad{
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
