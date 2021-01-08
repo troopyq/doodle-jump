@@ -60,7 +60,7 @@ function drawBackground() {
 
 function score() {
   for (let d of drops) {
-    console.log(player.x >= d.x && player.x + player.width <= d.x);
+    // console.log(player.x >= d.x && player.x + player.width <= d.x);
 
     if (
       player.x >= d.x &&
@@ -78,11 +78,13 @@ function drawLayer() {
   ctx.fillStyle = `#000`;
   ctx.font = `bold 30px sans-serif`;
   if (game.state == `play`) {
+    ctx.save();
     score();
     ctx.fillText(`Score: ${game.score}`, 10, 40);
   } else if (game.state == `end`) {
     ctx.fillText(`Score: ${game.score}`, 10, 40);
-    // ctx.fillText(`Dead`, cnv.width / 2 - 50, cnv.height / 2 + 30);
+    ctx.fillText(`Dead`, cnv.width / 2 - 50, cnv.height / 2 + 30);
+    ctx.restore();
   }
 }
 
@@ -158,6 +160,9 @@ function collision(subj) {
 
 function gravity() {
   // console.log(collision());
+  if (player.y > cnv.height) {
+    game.state = 'end';
+  }
 
   if (collision(platforms).is) {
     player.fall = false;
@@ -193,13 +198,13 @@ function gravity() {
       player.jumping = false;
       player.fall = true;
     }
-    console.log('up:' + player.dy);
+    // console.log('up:' + player.dy);
   }
 
   if (player.fall) {
     player.dy += player.dy < settings.dmax ? player.dd : 0;
     player.y += player.dy;
-    console.log('down:' + player.dy);
+    // console.log('down:' + player.dy);
   }
 }
 
